@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const becrypt = require('bcrypt');
-const validator = require('validator');
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const userSchema = new mongoose.Schema({
   userName: {
@@ -9,32 +9,66 @@ const userSchema = new mongoose.Schema({
     minlength: 5,
     maxlength: 50,
     lowercase: true,
-    required: [true, 'Please tell us your username!']
+    required: [true, "Please tell us your username!"],
   },
-  password: { type: String, required: true, minlength: 5, maxlength: 1024 },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  birthDate: { type: Date, required: true },
-  gender: { type: String, enum: ['male', 'female'], required: true },
+  password: {
+    type: String,
+    required: true,
+    minlength: 5,
+    maxlength: 1024,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  birthDate: {
+    type: Date,
+    required: true,
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+    required: true,
+  },
   city: {
     type: String,
     required: true,
     minlength: 3,
     maxlength: 15,
-    lowercase: true
+    lowercase: true,
   },
-  address: { type: String, default: '' },
-  emailAddress: { type: String, required: true, lowercase: true, unique: true },
+  address: {
+    type: String,
+    default: "",
+  },
+  emailAddress: {
+    type: String,
+    required: true,
+    lowercase: true,
+    unique: true,
+  },
   role: {
     type: String,
-    enum: ['manager', 'fan', 'admin'],
-    required: true
+    enum: ["manager", "fan", "admin"],
+    required: true,
   },
-  isPending: { type: Boolean, default: true, required: true },
-  createdIn: { type: Date, default: Date.now, required: true }
+  isPending: {
+    type: Boolean,
+    default: true,
+    required: true,
+  },
+  createdIn: {
+    type: Date,
+    default: Date.now,
+    required: true,
+  },
 });
 
-//signup
+// Signup
 userSchema.statics.signup = async function(
   userName,
   password,
@@ -58,22 +92,26 @@ userSchema.statics.signup = async function(
     !emailAddress ||
     !role
   ) {
-    throw Error('this fields is required');
+    throw new Error("All fields are required");
   }
+
   if (!validator.isEmail(emailAddress)) {
-    throw Error('Email is not valid');
+    throw new Error("Email is not valid");
   }
-  const exists = await this.findOne({ userName });
-  if (exists) {
-    throw Error('this username already exists!');
+
+  const userExists = await this.findOne({ userName });
+  if (userExists) {
+    throw new Error("This username already exists!");
   }
-  const Emailexists = await this.findOne({ emailAddress });
-  if (Emailexists) {
-    throw Error('this email already exists!');
+
+  const emailExists = await this.findOne({ emailAddress });
+  if (emailExists) {
+    throw new Error("This email already exists!");
   }
-  const saltRounds = 10;
-  const salt = await becrypt.genSalt(saltRounds);
-  const hash = await becrypt.hash(password.toString(), salt);
+
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(password.toString(), salt);
+
   const user = await this.create({
     userName,
     password: hash,
@@ -84,71 +122,82 @@ userSchema.statics.signup = async function(
     city,
     address,
     emailAddress,
-    role
+    role,
   });
 
   return user;
 };
 
+// Login
 userSchema.statics.login = async function(userName, password) {
   if (!userName || !password) {
-    throw Error('this fields is required');
+    throw new Error("All fields are required");
   }
 
   const user = await this.findOne({ userName });
   if (!user) {
-    throw Error('incorrect userName !');
+    throw new Error("Incorrect username!");
   }
-  if (user.role !== 'admin' && user.isPending === true)
-    throw Error(
-      " you can't login now you aren't authorized yet by the admin yet ! "
+
+  if (user.role !== "admin" && user.isPending) {
+    throw new Error(
+      "You can't login now, you aren't authorized by the admin yet!"
     );
-  console.log(user.role);
-  const match = await becrypt.compare(password.toString(), user.password);
-  console.log(match);
-  if (!match) {
-    throw Error('incorrect password !');
   }
+
+  const match = await bcrypt.compare(password.toString(), user.password);
+  if (!match) {
+    throw new Error("Incorrect password!");
+  }
+
   return user;
 };
 
+// Get User
 userSchema.statics.getUser = async function(_id) {
   const user = await this.findOne({ _id });
   if (!user) {
-    throw Error('no user found !');
+    throw new Error("No user found!");
   }
 
   return user;
 };
 
+// Edit User
 userSchema.statics.editUser = async function(_id, body) {
   const user = await this.findOneAndUpdate({ _id }, body, { new: true });
   if (!user) {
-    throw Error('no user found to be updated !');
+    throw new Error("No user found to be updated!");
   }
 
   return user;
 };
+
+// Delete User
 userSchema.statics.deleteUser = async function(_id) {
   const user = await this.deleteOne({ _id });
   if (!user) {
-    throw Error('no user found to be deleted !');
+    throw new Error("No user found to be deleted!");
   }
 
   return user;
 };
 
-userSchema.statics.getunAunothorizedUsers = async function() {
-  const rolesToFind = ['manager', 'fan'];
-  const user = await this.find({ isPending: true, role: { $in: rolesToFind } });
-  // const user = await this.find({ isPending: true });
-  if (!user) {
-    throw Error('no pending users  found !');
+// Get Unauthorized Users
+userSchema.statics.getUnauthorizedUsers = async function() {
+  const rolesToFind = ["manager", "fan"];
+  const users = await this.find({
+    isPending: true,
+    role: { $in: rolesToFind },
+  });
+  if (!users) {
+    throw new Error("No pending users found!");
   }
 
-  return user;
+  return users;
 };
 
+// Approve User
 userSchema.statics.approveUser = async function(_id) {
   const user = await this.findOneAndUpdate(
     { _id },
@@ -156,22 +205,23 @@ userSchema.statics.approveUser = async function(_id) {
     { new: true }
   );
   if (!user) {
-    throw Error('no user  found !');
+    throw new Error("No user found!");
   }
 
   return user;
 };
 
+// Get All Users
 userSchema.statics.getAllUsers = async function() {
-  const rolesToFind = ['manager', 'fan'];
+  const rolesToFind = ["manager", "fan"];
   const users = await this.find({ role: { $in: rolesToFind } });
-  // const users = await this.find();
   if (!users) {
-    throw Error('no users found !');
+    throw new Error("No users found!");
   }
 
   return users;
 };
-const userModel = mongoose.model('User', userSchema);
 
-module.exports = userModel;
+const UserModel = mongoose.model("User", userSchema);
+
+module.exports = UserModel;

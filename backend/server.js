@@ -4,24 +4,24 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRouter');
 const matchRoutes = require('./routes/matchRouter');
 const stadiumRoutes = require('./routes/stadiumRouter');
-const userRouter = require('./routes/userRouter');
-const ticketRouter = require('./routes/ticketRouter');
-const teamRouter = require('./routes/teamRouter');
+const userRoutes = require('./routes/userRouter');
+const ticketRoutes = require('./routes/ticketRouter');
+const teamRoutes = require('./routes/teamRouter');
 
 dotenv.config({ path: './config.env' });
 
 const app = require('./app');
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/user', userRouter);
-app.use('/api/match', matchRoutes);
-app.use('/api/stadium', stadiumRoutes);
-app.use('/api/ticket', ticketRouter);
-app.use('/api/team', teamRouter);
-
 // Enable CORS
 app.use(cors());
+
+// Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/matches', matchRoutes);
+app.use('/api/stadiums', stadiumRoutes);
+app.use('/api/tickets', ticketRoutes);
+app.use('/api/teams', teamRoutes);
 
 // Database Connection
 const DB = process.env.DATABASE;

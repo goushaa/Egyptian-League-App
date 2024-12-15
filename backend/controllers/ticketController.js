@@ -2,81 +2,49 @@ const ticketModel = require('../models/ticketModel.js');
 const Match = require('../models/matchModel.js');
 
 const reserveTicket = async (req, res) => {
-  console.log('try..............');
   try {
-    const matchId = req.body.matchId;
-    const seatNumbers = req.body.seatNumbers;
-    // console.log(seatNumbers.length);
-    const userName = req.body.userName;
-    // console.log(seatNumbers);
+    const { matchId, seatNumbers, userName } = req.body;
     const match = await Match.findById(matchId);
-    // console.log(match);
-    if (!match) throw Error('no match found to be updated !');
-    const seats = match.seats;
-    // console.log(seatNumbers.length);
 
-    seats.forEach(row => {
-      // Loop over each seat in the row
+    if (!match) {
+      throw new Error('No match found to be updated!');
+    }
+
+    match.seats.forEach(row => {
       row.forEach(seat => {
-        // Set isReserved to true
-        // let count=0;
-        // let seats1=seatNumbers;
-        for (let i = 0; i < seatNumbers.length; i++) {
-          if (seat.number === seatNumbers[i]) {
-            // console.log(seat.number, seatNumbers[i]);
-            // console.log(seat.isReserved);
-            // console.log(seatNumbers[i]);
-            if (seat.isReserved === true) {
-              throw Error(
-                "you can't reserve this seat it is already reserved! "
-              );
-            } else {
-              seat.isReserved = true;
-            }
+        if (seatNumbers.includes(seat.number)) {
+          if (seat.isReserved) {
+            throw new Error("You can't reserve this seat, it is already reserved!");
+          } else {
+            seat.isReserved = true;
           }
         }
       });
     });
 
-    const match1 = await Match.findOneAndUpdate(
+    const updatedMatch = await Match.findOneAndUpdate(
       matchId,
-      { seats },
-      {
-        new: true
-      }
+      { seats: match.seats },
+      { new: true }
     );
-    // console.log(match1.seats[0]);
 
-    if (!match1) {
-      throw Error('lol !');
+    if (!updatedMatch) {
+      throw new Error('Failed to update match!');
     }
 
-    const price = match1.ticketPrice * seatNumbers.length;
-    // console.log(matchId);
-    // console.log(seatNumber);
-    // console.log(userName);
-    // console.log(price);
-    const ticket = await ticketModel.reserveTicket(
-      matchId,
-      seatNumbers,
-      userName,
-      price
-    );
+    const price = updatedMatch.ticketPrice * seatNumbers.length;
+    const ticket = await ticketModel.reserveTicket(matchId, seatNumbers, userName, price);
 
-    return res.status(200).json({
-      ticket
-    });
+    return res.status(200).json({ ticket });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
 };
-const getAlltickets = async (req, res) => {
-  try {
-    const tickets = await ticketModel.getAlltickets(req.params.userName);
 
-    return res.status(200).json({
-      tickets
-    });
+const getAllTickets = async (req, res) => {
+  try {
+    const tickets = await ticketModel.getAllTickets(req.params.userName);
+    return res.status(200).json({ tickets });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -84,50 +52,33 @@ const getAlltickets = async (req, res) => {
 
 const deleteTicket = async (req, res) => {
   try {
-    const _id = req.params.id;
-    const ticket1 = await ticketModel.findOne({
-      _id,
-      userName: req.body.userName
-    });
-    if (!ticket1)
-      throw Error(
-        "no ticket found to be deleted by this Id or this ticket isn't belong to this user!"
-      );
-    const matchId = ticket1.matchId;
-    const match = await Match.findById(matchId);
-    const seatNumber = ticket1.seatNumber;
-    const daysBeforeMatch =
-      (match.dateTime.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
-    if (daysBeforeMatch < 3)
-      throw Error(
-        'Cannot cancel a ticket of a match that is less than 3 days away!'
-      );
-    const seats = match.seats;
-    seats.forEach(row => {
-      // Loop over each seat in the row
+    const { id } = req.params;
+    const { userName } = req.body;
+    const ticket = await ticketModel.findOne({ _id: id, userName });
+
+    if (!ticket) {
+      throw new Error("No ticket found to be deleted by this ID or this ticket doesn't belong to this user!");
+    }
+
+    const match = await Match.findById(ticket.matchId);
+    const daysBeforeMatch = (match.dateTime.getTime() - Date.now()) / (1000 * 60 * 60 * 24);
+
+    if (daysBeforeMatch < 3) {
+      throw new Error('Cannot cancel a ticket of a match that is less than 3 days away!');
+    }
+
+    match.seats.forEach(row => {
       row.forEach(seat => {
-        // Set isReserved to true
-        if (seat.number === seatNumber) {
+        if (seat.number === ticket.seatNumber) {
           seat.isReserved = false;
         }
       });
     });
 
-    const match1 = await Match.findOneAndUpdate(
-      matchId,
-      { seats },
-      {
-        new: true
-      }
-    );
-    console.log(match1);
+    await Match.findOneAndUpdate(ticket.matchId, { seats: match.seats }, { new: true });
+    const deletedTicket = await ticketModel.deleteTicket(id);
 
-    // all is well delete ticket
-    const ticket = await ticketModel.deleteTicket(_id);
-
-    return res.status(200).json({
-      deletedCount: ticket.deletedCount
-    });
+    return res.status(200).json({ deletedCount: deletedTicket.deletedCount });
   } catch (error) {
     return res.status(400).json({ error: error.message });
   }
@@ -135,6 +86,6 @@ const deleteTicket = async (req, res) => {
 
 module.exports = {
   reserveTicket,
-  getAlltickets,
+  getAllTickets,
   deleteTicket
 };

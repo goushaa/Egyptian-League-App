@@ -4,8 +4,8 @@ const teamRouter = express.Router();
 
 const teamController = require('../controllers/teamController.js');
 
-teamRouter.get('/getTeams', teamController.getTeams);
-
-teamRouter.get('/getTeamLogo', teamController.getTeamLogo);
+// Use RESTful conventions for route naming
+teamRouter.get('/', teamController.getTeams);
+teamRouter.get('/:id/logo', teamController.getTeamLogo);
 
 module.exports = teamRouter;

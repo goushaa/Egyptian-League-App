@@ -7,42 +7,33 @@ const ticketSchema = new mongoose.Schema({
   price: { type: Number, required: true }
 });
 
-ticketSchema.statics.reserveTicket = async function(
-  matchId,
-  seatNumbers,
-  userName,
-  price
-) {
+ticketSchema.statics.reserveTicket = async function(matchId, seatNumbers, userName, price) {
   if (!matchId || !seatNumbers || !userName || !price) {
-    throw Error('this fields is required !');
+    throw new Error('All fields are required!');
   }
-  const ticket = await this.create({
-    matchId,
-    seatNumbers,
-    userName,
-    price
-  });
 
+  const ticket = await this.create({ matchId, seatNumbers, userName, price });
   return ticket;
 };
 
-ticketSchema.statics.getAlltickets = async function(userName) {
+ticketSchema.statics.getAllTickets = async function(userName) {
   const tickets = await this.find({ userName });
   if (!tickets) {
-    throw Error('no  tickets was found for this user !');
+    throw new Error('No tickets found for this user!');
   }
 
   return tickets;
 };
+
 ticketSchema.statics.deleteTicket = async function(_id) {
-  const ticket = await this.deleteOne({ _id });
-  if (!ticket) {
-    throw Error('no ticket found to be deleted !');
+  const result = await this.deleteOne({ _id });
+  if (!result) {
+    throw new Error('No ticket found to be deleted!');
   }
 
-  return ticket;
+  return result;
 };
 
-const ticketModel = mongoose.model('Ticket', ticketSchema);
+const Ticket = mongoose.model('Ticket', ticketSchema);
 
-module.exports = ticketModel;
+module.exports = Ticket;
