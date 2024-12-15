@@ -47,6 +47,9 @@ const unauthorizedUsers = async (req, res) => {
 // Approve a user by ID
 const approveUser = async (req, res) => {
   const { id } = req.params;
+  if (req.user.role != "admin") {
+    return res.status(400).json({ error: 'Unauthorized access' });
+  }
   try {
     const user = await userModel.approveUser(id);
     return res.status(200).json({ user });

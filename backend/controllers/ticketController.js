@@ -3,7 +3,9 @@ const Match = require('../models/matchModel.js');
 
 const reserveTicket = async (req, res) => {
   try {
-    const { matchId, seatNumbers, userName } = req.body;
+    const { matchId, seatNumbers} = req.body;
+    const { userName } = req.user
+    console.log(userName)
     const match = await Match.findById(matchId);
 
     if (!match) {
@@ -43,7 +45,7 @@ const reserveTicket = async (req, res) => {
 
 const getAllTickets = async (req, res) => {
   try {
-    const tickets = await ticketModel.getAllTickets(req.params.userName);
+    const tickets = await ticketModel.getAllTickets(req.user.userName);
     return res.status(200).json({ tickets });
   } catch (error) {
     return res.status(400).json({ error: error.message });
@@ -53,7 +55,7 @@ const getAllTickets = async (req, res) => {
 const deleteTicket = async (req, res) => {
   try {
     const { id } = req.params;
-    const { userName } = req.body;
+    const { userName } = req.user;
     const ticket = await ticketModel.findOne({ _id: id, userName });
 
     if (!ticket) {

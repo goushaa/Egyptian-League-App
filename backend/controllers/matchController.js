@@ -27,6 +27,9 @@ const validateMatchData = (data) => {
 
 const createMatch = async (req, res) => {
   const { homeTeam, awayTeam, venue, dateTime, mainReferee, firstLinesman, secondLinesman, ticketPrice } = req.body;
+  if (req.user.role == "fan") {
+    return res.status(400).json({ error: 'Unauthorized access' });
+  }
 
   const validationError = validateMatchData(req.body);
   if (validationError) {
