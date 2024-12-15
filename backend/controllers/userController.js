@@ -24,10 +24,9 @@ const deleteUser = async (req, res) => {
 
 // Edit a user by ID
 const editUser = async (req, res) => {
-  const { id } = req.params;
   const userData = req.body;
   try {
-    const user = await userModel.editUser(id, userData);
+    const user = await userModel.editUser(req.user._id, userData);
     return res.status(200).json({ user });
   } catch (error) {
     return res.status(400).json({ error: error.message });
