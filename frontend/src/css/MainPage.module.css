@@ -1,0 +1,27 @@
+.container {
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #d32f2f; /* Red title */
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 auto;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #000; /* Black background for table headers */
+  color: #fff; /* White text for table headers */
+  font-weight: bold;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getUserTickets, reserveTicket, deleteTicket } from '../services/ticketService';
 import { getMatches } from '../services/matchService';
-import styles from './ReserveTicket.module.css';
+import styles from '../css/ReserveTicket.module.css';
 
 function ReserveTicket({ authData }) {
   const [matches, setMatches] = useState([]);

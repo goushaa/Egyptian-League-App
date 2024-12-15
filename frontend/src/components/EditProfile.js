@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { getUser, editUser } from '../services/userService';
-import styles from './EditProfile.module.css';
+import styles from '../css/EditProfile.module.css';
 
 function EditProfile({ authData }) {
   const [formData, setFormData] = useState({
@@ -17,20 +17,20 @@ function EditProfile({ authData }) {
   });
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (authData && authData._id) {
-      fetchUserData();
-    }
-  }, [authData]);
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     try {
       const response = await getUser(authData._id); // Pass the user ID
       setFormData(response.user);
     } catch (error) {
       setMessage(error.error);
     }
-  };
+  }, [authData._id]);
+
+  useEffect(() => {
+    if (authData && authData._id) {
+      fetchUserData();
+    }
+  }, [authData, fetchUserData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

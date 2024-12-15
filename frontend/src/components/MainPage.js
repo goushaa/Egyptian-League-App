@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getMatches } from '../services/matchService';
-import styles from './MainPage.module.css';
+import styles from '../css/MainPage.module.css';
 
 function MainPage() {
   const [matches, setMatches] = useState([]);

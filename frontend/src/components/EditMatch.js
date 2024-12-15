@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getTeams } from '../services/teamService';
 import { createMatch, editMatch, viewMatch, viewMatches } from '../services/matchService';
-import styles from './EditMatch.module.css';
+import styles from '../css/EditMatch.module.css';
 
 function EditMatch() {
   const [teams, setTeams] = useState([]);

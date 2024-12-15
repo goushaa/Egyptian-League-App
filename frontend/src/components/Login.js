@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';
-import styles from './Login.module.css';
+import styles from '../css/Login.module.css';
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({ userName: '', password: '' });

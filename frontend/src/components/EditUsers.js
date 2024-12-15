@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, getUnauthorizedUsers, approveUser, deleteUser } from '../services/userService';
-import styles from './EditUsers.module.css';
+import styles from '../css/EditUsers.module.css';
 
 function EditUsers() {
   const [users, setUsers] = useState([]);

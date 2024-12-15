@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { signUp } from '../services/authService';
-import styles from './SignUp.module.css'; // Import CSS module
+import styles from '../css/SignUp.module.css'; // Import CSS module
 
 function SignUp() {
   const [formData, setFormData] = useState({

@@ -1,0 +1,59 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 24px;
+  color: #d32f2f; /* Red title */
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.button {
+  width: 100%;
+  background-color: #d32f2f; /* Red button */
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button:hover {
+  background-color: #b71c1c; /* Darker red on hover */
+}
+
+.message {
+  margin-top: 10px;
+  color: red;
+}
+
+.signUpPrompt {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.signUpLink {
+  background: none;
+  color: #d32f2f; /* Red link */
+  border: none;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 14px;
+}
