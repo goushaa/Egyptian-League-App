@@ -13,7 +13,7 @@ function EditMatchDetails() {
     homeTeam: '',
     awayTeam: '',
     venue: '',
-    date: '', // Changed from dateTime to date
+    date: '', 
     mainReferee: '',
     firstLinesman: '',
     secondLinesman: '',
@@ -26,7 +26,8 @@ function EditMatchDetails() {
       const response = await getTeams();
       setTeams(response);
     } catch (error) {
-      setMessage(error.error);
+      console.log(error);
+      
     }
   }, []);
 
@@ -35,7 +36,7 @@ function EditMatchDetails() {
       const response = await getStadiums();
       setStadiums(response);
     } catch (error) {
-      setMessage(error.error);
+      console.log(error);
     }
   }, []);
 
@@ -47,7 +48,7 @@ function EditMatchDetails() {
         date: response.dateTime.split('T')[0] // Extract date part only
       });
     } catch (error) {
-      setMessage(error.error);
+        console.log(error);
     }
   }, [matchId]);
 
@@ -71,7 +72,7 @@ function EditMatchDetails() {
       });
       setMessage('Match edited successfully!');
     } catch (error) {
-      setMessage(error.error);
+      setMessage(error.msg);
     }
   };
 

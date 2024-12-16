@@ -40,10 +40,9 @@ function EditMatch() {
   const fetchStadiums = async () => {
     try {
       const response = await getStadiums();  
-      console.log(response);
-       
       setStadiums(response);
     } catch (error) {
+      
       setMessage(error.error);
     }
   };
@@ -69,7 +68,7 @@ function EditMatch() {
       setMessage('Match created successfully!');
       fetchMatches();
     } catch (error) {
-      setMessage(error.error);
+      setMessage(error.msg);
     }
   };
 
@@ -104,8 +103,8 @@ function EditMatch() {
               <option key={stadium._id} value={stadium.name}>{stadium.name}</option>
             ))}
           </select>
-          <label className={styles.editMatch_label}>Date and Time</label>
-          <input type="datetime-local" name="dateTime" value={matchDetails.dateTime} onChange={handleChange} className={styles.editMatch_input} required />
+          <label className={styles.editMatch_label}>Date</label>
+          <input type="date" name="dateTime" value={matchDetails.dateTime.split('T')[0]} onChange={handleChange} className={styles.editMatch_input} required />
           <label className={styles.editMatch_label}>Main Referee</label>
           <input type="text" name="mainReferee" placeholder="Main Referee" value={matchDetails.mainReferee} onChange={handleChange} className={styles.editMatch_input} required />
           <label className={styles.editMatch_label}>First Linesman</label>
