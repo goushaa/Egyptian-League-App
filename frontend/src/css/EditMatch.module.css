@@ -1,5 +1,7 @@
 .editMatch_container {
-  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -9,39 +11,28 @@
   font-family: Arial, sans-serif;
 }
 
-.editMatch_h2 {
+.editMatch_left,
+.editMatch_right {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.editMatch_h2,
+.editMatch_h3 {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-.editMatch_section {
-  margin-bottom: 20px;
-}
-
-.editMatch_h3 {
-  color: #d32f2f; /* Red section title */
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-}
-
-.editMatch_ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.editMatch_matchItem {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
 .editMatch_form {
   display: flex;
   flex-direction: column;
+}
+
+.editMatch_label {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 .editMatch_input {
@@ -74,4 +65,17 @@
   font-weight: bold;
   margin-top: 15px;
   color: red;
+}
+
+.editMatch_ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.editMatch_matchItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }

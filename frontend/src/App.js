@@ -9,6 +9,9 @@ import EditMatch from './components/EditMatch';
 import EditProfile from './components/EditProfile';
 import ReserveTicket from './components/ReserveTicket';
 import VacantSeats from './components/VacantSeats'; // Import VacantSeats component
+import ViewMatch from './components/ViewMatch'; // Import ViewMatch component
+import EditMatchDetails from './components/EditMatchDetails'; // Import EditMatchDetails component
+import AddStadium from './components/AddStadium'; // Import AddStadium component
 
 function App() {
   const [authData, setAuthData] = useState({ token: null, userName: '', role: '', _id: '' });
@@ -39,7 +42,6 @@ function App() {
     localStorage.removeItem('_id'); // Ensure _id is removed from localStorage
   };
 
-
   return (
     <Router>
       <NavBar authData={authData} onLogout={handleLogout} />
@@ -52,6 +54,9 @@ function App() {
         <Route path="/edit-profile" element={<EditProfile authData={authData} />} />
         <Route path="/reserve-ticket" element={<ReserveTicket authData={authData} />} />
         <Route path="/vacant-seats/:matchId" element={<VacantSeats />} /> {/* Add route for VacantSeats */}
+        <Route path="/view-match/:matchId" element={<ViewMatch />} /> {/* Add route for ViewMatch */}
+        <Route path="/edit-match/:matchId" element={<EditMatchDetails />} /> {/* Add route for EditMatchDetails */}
+        <Route path="/create-stadium" element={<AddStadium />} /> {/* Add route for AddStadium */}
       </Routes>
     </Router>
   );

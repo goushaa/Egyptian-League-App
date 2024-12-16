@@ -1,5 +1,7 @@
 .reserveTicket_container {
-  max-width: 600px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
   margin: 50px auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -9,7 +11,14 @@
   font-family: Arial, sans-serif;
 }
 
-.reserveTicket_h2 {
+.reserveTicket_left,
+.reserveTicket_right {
+  flex: 1;
+  margin: 0 10px;
+}
+
+.reserveTicket_h2,
+.reserveTicket_h3 {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
@@ -55,8 +64,19 @@
 
 .reserveTicket_seats {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin: 10px 0;
+}
+
+.reserveTicket_row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.reserveTicket_rowLabel {
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 .reserveTicket_seat {
@@ -80,4 +100,28 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+}
+
+.reserveTicket_seat_vacant {
+  background-color: #4caf50; /* Green for vacant seats */
+  color: white;
+}
+
+.reserveTicket_seat_reserved {
+  background-color: #f44336; /* Red for reserved seats */
+  color: white;
+}
+
+.reserveTicket_seat_selected {
+  background-color: #ffeb3b; /* Yellow for selected seats */
+  color: black;
+}
+
+.reserveTicket_link {
+  color: #d32f2f; /* Red link */
+  text-decoration: none;
+}
+
+.reserveTicket_link:hover {
+  text-decoration: underline;
 }

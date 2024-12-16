@@ -12,9 +12,14 @@ function NavBar({ authData, onLogout }) {
           <Link to="/" className={styles.navBar_a}>Home</Link>
         </li>
         {role === 'manager' && (
-          <li>
-            <Link to="/edit-matches" className={styles.navBar_a}>Edit Matches</Link>
-          </li>
+          <>
+            <li>
+              <Link to="/edit-matches" className={styles.navBar_a}>Edit Matches</Link>
+            </li>
+            <li>
+              <Link to="/create-stadium" className={styles.navBar_a}>Add Stadium</Link>
+            </li>
+          </>
         )}
         {role === 'admin' && (
           <>
