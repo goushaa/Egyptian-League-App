@@ -6,46 +6,46 @@ function NavBar({ authData, onLogout }) {
   const { token, role } = authData;
 
   return (
-    <nav className={styles.nav}>
-      <ul className={styles.ul}>
-        <li className={styles.home}>
-          <Link to="/">Home</Link>
+    <nav className={styles.navBar_nav}>
+      <ul className={styles.navBar_ul}>
+        <li className={styles.navBar_home}>
+          <Link to="/" className={styles.navBar_a}>Home</Link>
         </li>
         {role === 'manager' && (
           <li>
-            <Link to="/edit-matches">Edit Matches</Link>
+            <Link to="/edit-matches" className={styles.navBar_a}>Edit Matches</Link>
           </li>
         )}
         {role === 'admin' && (
           <>
             <li>
-              <Link to="/edit-users">Edit Users</Link>
+              <Link to="/edit-users" className={styles.navBar_a}>Edit Users</Link>
             </li>
           </>
         )}
         {role === 'fan' && (
           <>
             <li>
-              <Link to="/reserve-ticket">Reserve Ticket</Link>
+              <Link to="/reserve-ticket" className={styles.navBar_a}>Reserve Ticket</Link>
             </li>
             <li>
-              <Link to="/edit-profile">Edit Profile</Link>
+              <Link to="/edit-profile" className={styles.navBar_a}>Edit Profile</Link>
             </li>
           </>
         )}
-        <div className={styles.rightLinks}>
+        <div className={styles.navBar_rightLinks}>
           {!token ? (
             <>
               <li>
-                <Link to="/login">Login</Link>
+                <Link to="/login" className={styles.navBar_a}>Login</Link>
               </li>
               <li>
-                <Link to="/signup">Sign Up</Link>
+                <Link to="/signup" className={styles.navBar_a}>Sign Up</Link>
               </li>
             </>
           ) : (
             <li>
-              <button onClick={onLogout} className={styles.logoutButton}>
+              <button onClick={onLogout} className={styles.navBar_logoutButton}>
                 Logout
               </button>
             </li>

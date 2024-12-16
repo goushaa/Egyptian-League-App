@@ -1,12 +1,12 @@
-.nav {
+.navBar_nav {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; 
   padding: 10px 20px;
-  background-color: #000; /* Black background */
+  background-color: #000; 
 }
 
-.ul {
+.navBar_ul {
   display: flex;
   list-style-type: none;
   padding: 0;
@@ -14,41 +14,46 @@
   width: 100%;
 }
 
-.ul li {
+.navBar_ul li {
   margin: 0 10px;
+  display: flex;
+  align-items: center; 
 }
 
-.home {
+.navBar_home {
   flex-grow: 1;
 }
 
-.rightLinks {
+.navBar_rightLinks {
   display: flex;
   justify-content: flex-end;
 }
 
-.rightLinks li {
+.navBar_rightLinks li {
   margin-left: 15px;
+  display: flex;
+  align-items: center; 
 }
 
-.logoutButton {
-  background-color: #d32f2f; /* Red background */
-  color: white;
+.navBar_logoutButton {
+  background-color: #d32f2f; 
+  color: white !important;
   border: none;
-  padding: 8px 16px;
+  padding: 6px 12px;
   cursor: pointer;
   font-size: 16px;
+  border-radius: 10px; 
 }
 
-.logoutButton:hover {
-  background-color: #b71c1c; /* Darker red on hover */
+.navBar_logoutButton:hover {
+  background-color: #b71c1c;
 }
 
-a {
-  text-decoration: none;
-  color: white;
+.navBar_a {
+  text-decoration: none !important;
+  color: white !important;
 }
 
-a:hover {
-  color: #ddd;
+.navBar_a:hover {
+  color: #ddd !important;
 }

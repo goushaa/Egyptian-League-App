@@ -1,4 +1,4 @@
-.container {
+.editProfile_container {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
@@ -9,19 +9,19 @@
   font-family: Arial, sans-serif;
 }
 
-h2 {
+.editProfile_h2 {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-.form {
+.editProfile_form {
   display: flex;
   flex-direction: column;
 }
 
-.input {
+.editProfile_input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -31,7 +31,7 @@ h2 {
   box-sizing: border-box;
 }
 
-.button {
+.editProfile_button {
   background-color: #d32f2f; /* Red button */
   color: #fff;
   border: none;
@@ -42,13 +42,34 @@ h2 {
   margin-top: 10px;
 }
 
-.button:hover {
+.editProfile_button:hover {
   background-color: #b71c1c; /* Darker red on hover */
 }
 
-.message {
+.editProfile_message {
   text-align: center;
   font-weight: bold;
   margin-top: 15px;
   color: red;
+}
+
+.editProfile_passwordContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editProfile_toggleButton {
+  background-color: #d32f2f; /* Red button */
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+
+.editProfile_toggleButton:hover {
+  background-color: #b71c1c; /* Darker red on hover */
 }

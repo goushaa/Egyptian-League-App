@@ -1,0 +1,63 @@
+.vacantSeats_container {
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 300px;
+    min-height: 300px;
+    max-width: 800px; /* Adjust based on the number of seats */
+  }
+  
+  .vacantSeats_grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px; /* Space between rows */
+    height: auto; /* Adjusts based on content */
+    width: auto; /* Adjusts dynamically */
+  }
+  
+  .vacantSeats_row {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Space between seats */
+  }
+  
+  .vacantSeats_seat {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+  }
+  
+  .vacantSeats_seat_vacant {
+    background-color: #4caf50; /* Green for vacant seats */
+    color: white;
+  }
+  
+  .vacantSeats_seat_reserved {
+    background-color: #f44336; /* Red for reserved seats */
+    color: white;
+  }
+  
+  .vacantSeats_footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  

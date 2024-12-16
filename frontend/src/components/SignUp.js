@@ -53,16 +53,16 @@ function SignUp() {
   };
 
   return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>Sign Up</h2>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className={styles.signUp_container}>
+      <h2 className={styles.signUp_title}>Sign Up</h2>
+      <form className={styles.signUp_form} onSubmit={handleSubmit}>
         <input
           type="text"
           name="userName"
           placeholder="Username"
           value={formData.userName}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <input
@@ -71,7 +71,7 @@ function SignUp() {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <input
@@ -80,7 +80,7 @@ function SignUp() {
           placeholder="First Name"
           value={formData.firstName}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <input
@@ -89,7 +89,7 @@ function SignUp() {
           placeholder="Last Name"
           value={formData.lastName}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <input
@@ -97,14 +97,14 @@ function SignUp() {
           name="birthDate"
           value={formData.birthDate}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <select
           name="gender"
           value={formData.gender}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         >
           <option value="">Select Gender</option>
@@ -120,7 +120,7 @@ function SignUp() {
           placeholder="City"
           value={formData.city}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <input
@@ -129,7 +129,7 @@ function SignUp() {
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
         />
         <input
           type="email"
@@ -137,14 +137,14 @@ function SignUp() {
           placeholder="Email Address"
           value={formData.emailAddress}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         />
         <select
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.signUp_input}
           required
         >
           <option value="">Select Role</option>
@@ -154,12 +154,12 @@ function SignUp() {
             </option>
           ))}
         </select>
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.signUp_button}>
           Sign Up
         </button>
       </form>
 {message && (
-      <p className={`${styles.message} ${message.type === 'error' ? styles.error : styles.success}`}>
+      <p className={`${styles.signUp_message} ${message.type === 'error' ? styles.signUp_message_error : styles.signUp_message_success}`}>
         {message.text}
       </p>
     )}    </div>

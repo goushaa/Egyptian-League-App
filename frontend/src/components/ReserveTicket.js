@@ -85,11 +85,11 @@ function ReserveTicket({ authData }) {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Reserve Ticket</h2>
-      {message && <p className={styles.message}>{message}</p>}
-      <form className={styles.form} onSubmit={handleReserve}>
-        <select value={selectedMatch} onChange={handleMatchChange} className={styles.input} required>
+    <div className={styles.reserveTicket_container}>
+      <h2 className={styles.reserveTicket_h2}>Reserve Ticket</h2>
+      {message && <p className={styles.reserveTicket_message}>{message}</p>}
+      <form className={styles.reserveTicket_form} onSubmit={handleReserve}>
+        <select value={selectedMatch} onChange={handleMatchChange} className={styles.reserveTicket_input} required>
           <option value="">Select Match</option>
           {matches.map((match) => (
             <option key={match._id} value={match._id}>
@@ -97,12 +97,12 @@ function ReserveTicket({ authData }) {
             </option>
           ))}
         </select>
-        <div className={styles.seats}>
+        <div className={styles.reserveTicket_seats}>
           {availableSeats.map((seat) => (
             <button
               key={seat.number}
               type="button"
-              className={`${styles.seat} ${selectedSeats.includes(seat.number) ? styles.selected : ''}`}
+              className={`${styles.reserveTicket_seat} ${selectedSeats.includes(seat.number) ? styles.reserveTicket_seat_selected : ''}`}
               onClick={() => handleSeatSelection(seat.number)}
             >
               {seat.number}
@@ -115,7 +115,7 @@ function ReserveTicket({ authData }) {
           placeholder="Credit Card Number"
           value={creditCard.number}
           onChange={handleCreditCardChange}
-          className={styles.input}
+          className={styles.reserveTicket_input}
           required
         />
         <input
@@ -124,20 +124,20 @@ function ReserveTicket({ authData }) {
           placeholder="PIN"
           value={creditCard.pin}
           onChange={handleCreditCardChange}
-          className={styles.input}
+          className={styles.reserveTicket_input}
           required
         />
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.reserveTicket_button}>
           Reserve
         </button>
       </form>
-      <div className={styles.section}>
+      <div className={styles.reserveTicket_section}>
         <h3>Your Reservations</h3>
         <ul>
           {userTickets.map((ticket) => (
-            <li key={ticket._id} className={styles.ticketItem}>
+            <li key={ticket._id} className={styles.reserveTicket_ticketItem}>
               Match: {ticket.matchId}, Seats: {ticket.seatNumbers.join(', ')}
-              <button onClick={() => handleCancelReservation(ticket._id)} className={styles.button}>
+              <button onClick={() => handleCancelReservation(ticket._id)} className={styles.reserveTicket_button}>
                 Cancel
               </button>
             </li>

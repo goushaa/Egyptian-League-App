@@ -1,4 +1,4 @@
-.container {
+.signUp_container {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
@@ -9,14 +9,14 @@
   font-family: Arial, sans-serif;
 }
 
-.title {
+.signUp_title {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-.input {
+.signUp_input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -26,7 +26,7 @@
   box-sizing: border-box;
 }
 
-.button {
+.signUp_button {
   width: 100%;
   padding: 10px;
   background-color: #d32f2f; /* Red button */
@@ -38,20 +38,20 @@
   margin-top: 10px;
 }
 
-.button:hover {
+.signUp_button:hover {
   background-color: #b71c1c; /* Darker red on hover */
 }
 
-.message {
+.signUp_message {
   text-align: center;
   font-weight: bold;
   margin-top: 15px;
 }
 
-.message.success {
+.signUp_message.success {
   color: green;
 }
 
-.message.error {
+.signUp_message.error {
   color: red;
 }

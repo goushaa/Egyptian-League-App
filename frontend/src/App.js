@@ -6,13 +6,13 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import EditUsers from './components/EditUsers';
 import EditMatch from './components/EditMatch';
-import EditProfile from './components/EditProfile'; // Import EditProfile component
-import ReserveTicket from './components/ReserveTicket'; // Import ReserveTicket component
+import EditProfile from './components/EditProfile';
+import ReserveTicket from './components/ReserveTicket';
+import VacantSeats from './components/VacantSeats'; // Import VacantSeats component
 
 function App() {
   const [authData, setAuthData] = useState({ token: null, userName: '', role: '', _id: '' });
 
-  // Load token from localStorage on initial render
   useEffect(() => {
     const savedToken = localStorage.getItem('authToken');
     const savedUserName = localStorage.getItem('userName');
@@ -28,7 +28,7 @@ function App() {
     localStorage.setItem('authToken', newToken);
     localStorage.setItem('userName', newUserName);
     localStorage.setItem('role', newRole);
-    localStorage.setItem('_id', newId);
+    localStorage.setItem('_id', newId); // Ensure _id is stored in localStorage
   };
 
   const handleLogout = () => {
@@ -36,8 +36,9 @@ function App() {
     localStorage.removeItem('authToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('role');
-    localStorage.removeItem('_id');
+    localStorage.removeItem('_id'); // Ensure _id is removed from localStorage
   };
+
 
   return (
     <Router>
@@ -48,8 +49,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/edit-users" element={<EditUsers />} />
         <Route path="/edit-matches" element={<EditMatch />} />
-        <Route path="/edit-profile" element={<EditProfile authData={authData} />} /> {/* Add route for EditProfile */}
-        <Route path="/reserve-ticket" element={<ReserveTicket authData={authData} />} /> {/* Add route for ReserveTicket */}
+        <Route path="/edit-profile" element={<EditProfile authData={authData} />} />
+        <Route path="/reserve-ticket" element={<ReserveTicket authData={authData} />} />
+        <Route path="/vacant-seats/:matchId" element={<VacantSeats />} /> {/* Add route for VacantSeats */}
       </Routes>
     </Router>
   );

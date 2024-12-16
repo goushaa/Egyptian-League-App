@@ -1,27 +1,89 @@
-.container {
+.mainPage_container {
   padding: 20px;
+  max-width: 40%;
+  margin: 0 auto;
 }
 
-h1 {
+.mainPage_h1 {
   text-align: center;
   color: #d32f2f; /* Red title */
   margin-bottom: 20px;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 0 auto;
+.mainPage_fixtures {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.table th, .table td {
+.mainPage_fixture {
   border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.table th {
-  background-color: #000; /* Black background for table headers */
-  color: #fff; /* White text for table headers */
+.mainPage_teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Aligns everything vertically */
+  font-size: 1.2rem;
   font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.mainPage_team {
+  display: flex;
+  flex-direction: column;
+  text-align: left; /* Aligns team names and labels */
+}
+
+.mainPage_team:last-child {
+  text-align: right; /* Aligns the Away Team */
+}
+
+.mainPage_vs {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centers "VS" and "Seats" link */
+  font-weight: bold;
+}
+
+.mainPage_seatsLink {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #1976d2; /* Blue color for the link */
+  text-decoration: none;
+}
+
+.mainPage_seatsLink:hover {
+  text-decoration: underline;
+}
+
+.mainPage_teamLabel {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 5px;
+}
+
+.mainPage_details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.mainPage_details_left {
+  flex: 1;
+  text-align: left;
+}
+
+.mainPage_details_right {
+  flex: 1;
+  text-align: right;
+}
+
+.mainPage_detailItem {
+  margin-bottom: 5px;
 }

@@ -1,4 +1,4 @@
-.container {
+.reserveTicket_container {
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
@@ -9,19 +9,19 @@
   font-family: Arial, sans-serif;
 }
 
-h2 {
+.reserveTicket_h2 {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-.form {
+.reserveTicket_form {
   display: flex;
   flex-direction: column;
 }
 
-.input {
+.reserveTicket_input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -31,7 +31,7 @@ h2 {
   box-sizing: border-box;
 }
 
-.button {
+.reserveTicket_button {
   background-color: #d32f2f; /* Red button */
   color: #fff;
   border: none;
@@ -42,24 +42,24 @@ h2 {
   margin-top: 10px;
 }
 
-.button:hover {
+.reserveTicket_button:hover {
   background-color: #b71c1c; /* Darker red on hover */
 }
 
-.message {
+.reserveTicket_message {
   text-align: center;
   font-weight: bold;
   margin-top: 15px;
   color: red;
 }
 
-.seats {
+.reserveTicket_seats {
   display: flex;
   flex-wrap: wrap;
   margin: 10px 0;
 }
 
-.seat {
+.reserveTicket_seat {
   width: 40px;
   height: 40px;
   margin: 5px;
@@ -69,12 +69,12 @@ h2 {
   cursor: pointer;
 }
 
-.seat.selected {
+.reserveTicket_seat.selected {
   background-color: #d32f2f; /* Red selected seat */
   color: #fff;
 }
 
-.ticketItem {
+.reserveTicket_ticketItem {
   display: flex;
   justify-content: space-between;
   align-items: center;

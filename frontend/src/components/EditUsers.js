@@ -1,30 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers, getUnauthorizedUsers, approveUser, deleteUser } from '../services/userService';
+import { getAllUsers, approveUser, deleteUser } from '../services/userService';
 import styles from '../css/EditUsers.module.css';
 
 function EditUsers() {
   const [users, setUsers] = useState([]);
-  const [unauthorizedUsers, setUnauthorizedUsers] = useState([]);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     fetchUsers();
-    fetchUnauthorizedUsers();
   }, []);
 
   const fetchUsers = async () => {
     try {
       const response = await getAllUsers();
-      setUsers(response.users);
-    } catch (error) {
-      setMessage(error.error);
-    }
-  };
-
-  const fetchUnauthorizedUsers = async () => {
-    try {
-      const response = await getUnauthorizedUsers();
-      setUnauthorizedUsers(response.users);
+      const sortedUsers = response.users.sort((a, b) => b.isPending - a.isPending);
+      setUsers(sortedUsers);
     } catch (error) {
       setMessage(error.error);
     }
@@ -34,7 +24,6 @@ function EditUsers() {
     try {
       await approveUser(userId);
       setMessage('User approved successfully!');
-      fetchUnauthorizedUsers(); // Re-fetch unauthorized users
       fetchUsers(); // Re-fetch all users
     } catch (error) {
       setMessage(error.error);
@@ -46,34 +35,35 @@ function EditUsers() {
       await deleteUser(userId);
       setMessage('User deleted successfully!');
       fetchUsers(); // Re-fetch all users
-      fetchUnauthorizedUsers(); // Re-fetch unauthorized users
     } catch (error) {
       setMessage(error.error);
     }
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Manage Users</h2>
-      {message && <p className={styles.message}>{message}</p>}
-      <div className={styles.section}>
-        <h3>Unauthorized Users</h3>
-        <ul>
-          {unauthorizedUsers.map(user => (
-            <li key={user._id} className={styles.userItem}>
-              {user.userName} - {user.role}
-              <button onClick={() => handleApprove(user._id)} className={styles.button}>Approve</button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className={styles.section}>
-        <h3>All Users</h3>
-        <ul>
+    <div className={styles.editUsers_container}>
+      <h2 className={styles.editUsers_h2}>Manage Users</h2>
+      {message && <p className={styles.editUsers_message}>{message}</p>}
+      <div className={styles.editUsers_section}>
+        <ul className={styles.editUsers_userList}>
           {users.map(user => (
-            <li key={user._id} className={styles.userItem}>
-              {user.userName} - {user.role}
-              <button onClick={() => handleDelete(user._id)} className={styles.button}>Delete</button>
+            <li key={user._id} className={styles.editUsers_userItem}>
+              <div className={styles.editUsers_userDetails}>
+                <p><strong>Username:</strong> {user.userName}</p>
+                <p><strong>Name:</strong> {user.firstName} {user.lastName}</p>
+                <p><strong>Email:</strong> {user.emailAddress}</p>
+                <p><strong>City:</strong> {user.city}</p>
+                <p><strong>Gender:</strong> {user.gender}</p>
+                <p><strong>Birth Date:</strong> {new Date(user.birthDate).toLocaleDateString()}</p>
+                <p><strong>Role:</strong> {user.role}</p>
+                <p><strong>Status:</strong> {user.isPending ? 'Pending' : 'Approved'}</p>
+              </div>
+              <div className={styles.editUsers_userActions}>
+                {user.isPending && (
+                  <button onClick={() => handleApprove(user._id)} className={styles.editUsers_button}>Approve</button>
+                )}
+                <button onClick={() => handleDelete(user._id)} className={styles.editUsers_button}>Delete</button>
+              </div>
             </li>
           ))}
         </ul>

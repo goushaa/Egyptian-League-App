@@ -17,7 +17,7 @@ function Login({ onLogin }) {
     e.preventDefault();
     try {
       const response = await login(formData);      
-      onLogin(response.token, response.userName, response.role); // Call onLogin with the token, userName, and role
+      onLogin(response.token, response.userName, response.role, response._id); // Call onLogin with the token, userName, and role
       setMessage('Login Successful!');
       navigate('/');
     } catch (error) {
@@ -26,16 +26,16 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div className={styles.container}>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+    <div className={styles.login_container}>
+      <h2 className={styles.login_title}>Login</h2>
+      <form className={styles.login_form} onSubmit={handleSubmit}>
         <input
           type="text"
           name="userName"
           placeholder="Username"
           value={formData.userName}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.login_input}
           required
         />
         <input
@@ -44,17 +44,17 @@ function Login({ onLogin }) {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          className={styles.input}
+          className={styles.login_input}
           required
         />
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={styles.login_button}>
           Login
         </button>
       </form>
-      {message && <p className={styles.message}>{message}</p>}
-      <p className={styles.signUpPrompt}>
+      {message && <p className={styles.login_message}>{message}</p>}
+      <p className={styles.login_signUpPrompt}>
         Don’t have an account?{' '}
-        <button className={styles.signUpLink} onClick={() => navigate('/signup')}>
+        <button className={styles.login_signUpLink} onClick={() => navigate('/signup')}>
           Sign Up
         </button>
       </p>

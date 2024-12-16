@@ -1,4 +1,4 @@
-.container {
+.editMatch_container {
   max-width: 600px;
   margin: 50px auto;
   padding: 20px;
@@ -9,29 +9,29 @@
   font-family: Arial, sans-serif;
 }
 
-h2 {
+.editMatch_h2 {
   text-align: center;
   color: #d32f2f; /* Red title */
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-.section {
+.editMatch_section {
   margin-bottom: 20px;
 }
 
-h3 {
+.editMatch_h3 {
   color: #d32f2f; /* Red section title */
   font-size: 1.4rem;
   margin-bottom: 10px;
 }
 
-ul {
+.editMatch_ul {
   list-style-type: none;
   padding: 0;
 }
 
-.matchItem {
+.editMatch_matchItem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -39,12 +39,12 @@ ul {
   border-bottom: 1px solid #ddd;
 }
 
-.form {
+.editMatch_form {
   display: flex;
   flex-direction: column;
 }
 
-.input {
+.editMatch_input {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -54,7 +54,7 @@ ul {
   box-sizing: border-box;
 }
 
-.button {
+.editMatch_button {
   background-color: #d32f2f; /* Red button */
   color: #fff;
   border: none;
@@ -65,11 +65,11 @@ ul {
   margin-top: 10px;
 }
 
-.button:hover {
+.editMatch_button:hover {
   background-color: #b71c1c; /* Darker red on hover */
 }
 
-.message {
+.editMatch_message {
   text-align: center;
   font-weight: bold;
   margin-top: 15px;
