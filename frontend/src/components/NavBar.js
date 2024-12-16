@@ -9,7 +9,13 @@ function NavBar({ authData, onLogout }) {
     <nav className={styles.navBar_nav}>
       <ul className={styles.navBar_ul}>
         <li className={styles.navBar_home}>
-          <Link to="/" className={styles.navBar_a}>Home</Link>
+          <Link to="/" className={styles.navBar_a}>
+            <img
+              src="https://upload.wikimedia.org/wikipedia/ar/6/60/Egyptian_Football_Association.svg"
+              alt="Home"
+              className={styles.navBar_logo}
+            />
+          </Link>
         </li>
         {role === 'manager' && (
           <>
