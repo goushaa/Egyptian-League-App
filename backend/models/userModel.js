@@ -165,6 +165,11 @@ userSchema.statics.getUser = async function(_id) {
 
 // Edit User
 userSchema.statics.editUser = async function(_id, body) {
+  if (body.password) {
+    const salt = await bcrypt.genSalt(10);
+    body.password = await bcrypt.hash(body.password.toString(), salt);
+  }
+
   const user = await this.findOneAndUpdate({ _id }, body, { new: true });
   if (!user) {
     throw new Error("No user found to be updated!");
