@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { getMatches } from '../services/matchService';
 import { getTeamLogo } from '../services/teamService';
@@ -8,21 +8,7 @@ function MainPage() {
   const [matches, setMatches] = useState([]);
   const [teamLogos, setTeamLogos] = useState({});
 
-  useEffect(() => {
-    fetchMatches();
-  }, []);
-
-  const fetchMatches = async () => {
-    try {
-      const response = await getMatches();
-      setMatches(response.matches);
-      fetchTeamLogos(response.matches);
-    } catch (error) {
-      console.error('Error fetching matches:', error);
-    }
-  };
-
-  const fetchTeamLogos = async (matches) => {
+  const fetchTeamLogos = useCallback(async (matches) => {
     const logos = {};
     for (const match of matches) {
       if (!logos[match.homeTeam]) {
@@ -33,7 +19,21 @@ function MainPage() {
       }
     }
     setTeamLogos(logos);
-  };
+  }, []);
+
+  const fetchMatches = useCallback(async () => {
+    try {
+      const response = await getMatches();
+      setMatches(response.matches);
+      fetchTeamLogos(response.matches);
+    } catch (error) {
+      console.error('Error fetching matches:', error);
+    }
+  }, [fetchTeamLogos]);
+
+  useEffect(() => {
+    fetchMatches();
+  }, [fetchMatches]);
 
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -48,6 +48,7 @@ function MainPage() {
           <div key={match._id} className={styles.mainPage_fixture}>
             <div className={styles.mainPage_teams}>
               <div className={`${styles.mainPage_team} ${styles.home}`}>
+                <span>{match.homeTeam}</span>
                 {teamLogos[match.homeTeam] && (
                   <img
                     src={teamLogos[match.homeTeam]}
@@ -55,7 +56,6 @@ function MainPage() {
                     className={styles.mainPage_teamLogo}
                   />
                 )}
-                <span>{match.homeTeam}</span>
                 <div className={styles.mainPage_teamLabel}>Home Team</div>
               </div>
               <div className={styles.mainPage_vs}>
