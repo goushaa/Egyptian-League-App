@@ -3,28 +3,44 @@ const Match = require('../models/matchModel.js');
 
 const reserveTicket = async (req, res) => {
   try {
-    const { matchId, seatNumbers} = req.body;
-    const { userName } = req.user
-    console.log(userName)
+    const { matchId, seatNumbers } = req.body;
+    const { userName } = req.user;
     const match = await Match.findById(matchId);
 
     if (!match) {
       throw new Error('No match found to be updated!');
     }
 
-    match.seats.forEach(row => {
-      row.forEach(seat => {
-        if (seatNumbers.includes(seat.number)) {
-          if (seat.isReserved) {
-            throw new Error("You can't reserve this seat, it is already reserved!");
-          } else {
+    // Check if all seats are available
+    for (const seatNumber of seatNumbers) {
+      let seatFound = false;
+      for (const row of match.seats) {
+        for (const seat of row) {
+          if (seat.number === seatNumber) {
+            seatFound = true;
+            if (seat.isReserved) {
+              throw new Error(`Seat ${seatNumber} is already reserved!`);
+            }
+          }
+        }
+      }
+      if (!seatFound) {
+        throw new Error(`Seat ${seatNumber} not found!`);
+      }
+    }
+
+    // Reserve the seats
+    for (const seatNumber of seatNumbers) {
+      for (const row of match.seats) {
+        for (const seat of row) {
+          if (seat.number === seatNumber) {
             seat.isReserved = true;
           }
         }
-      });
-    });
+      }
+    }
 
-    const updatedMatch = await Match.findOneAndUpdate(
+    const updatedMatch = await Match.findByIdAndUpdate(
       matchId,
       { seats: match.seats },
       { new: true }
@@ -69,15 +85,18 @@ const deleteTicket = async (req, res) => {
       throw new Error('Cannot cancel a ticket of a match that is less than 3 days away!');
     }
 
-    match.seats.forEach(row => {
-      row.forEach(seat => {
-        if (seat.number === ticket.seatNumber) {
-          seat.isReserved = false;
+    // Unreserve the seats
+    for (const seatNumber of ticket.seatNumbers) {
+      for (const row of match.seats) {
+        for (const seat of row) {
+          if (seat.number === seatNumber) {
+            seat.isReserved = false;
+          }
         }
-      });
-    });
+      }
+    }
 
-    await Match.findOneAndUpdate(ticket.matchId, { seats: match.seats }, { new: true });
+    await Match.findByIdAndUpdate(ticket.matchId, { seats: match.seats }, { new: true });
     const deletedTicket = await ticketModel.deleteTicket(id);
 
     return res.status(200).json({ deletedCount: deletedTicket.deletedCount });
