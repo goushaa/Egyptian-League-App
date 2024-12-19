@@ -10,3 +10,12 @@ export const getTeams = async () => {
     throw error.response ? error.response.data : 'Something went wrong';
   }
 };
+
+export const getTeamLogo = async (teamName) => {
+  try {
+    const response = await axios.get(`${TEAMS_API_URL}/logo/${teamName}`);
+    return response.data.teamImageURL;
+  } catch (error) {
+    throw error.response ? error.response.data : 'Something went wrong';
+  }
+};

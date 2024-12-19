@@ -6,6 +6,6 @@ const teamController = require('../controllers/teamController.js');
 
 // Use RESTful conventions for route naming
 teamRouter.get('/', teamController.getTeams);
-teamRouter.get('/:id/logo', teamController.getTeamLogo);
+teamRouter.get('/logo/:name', teamController.getTeamLogo);
 
 module.exports = teamRouter;

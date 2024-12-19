@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getMatches } from '../services/matchService';
+import { getTeamLogo } from '../services/teamService';
 import styles from '../css/MainPage.module.css';
 
 function MainPage() {
   const [matches, setMatches] = useState([]);
+  const [teamLogos, setTeamLogos] = useState({});
 
   useEffect(() => {
     fetchMatches();
@@ -14,9 +16,23 @@ function MainPage() {
     try {
       const response = await getMatches();
       setMatches(response.matches);
+      fetchTeamLogos(response.matches);
     } catch (error) {
       console.error('Error fetching matches:', error);
     }
+  };
+
+  const fetchTeamLogos = async (matches) => {
+    const logos = {};
+    for (const match of matches) {
+      if (!logos[match.homeTeam]) {
+        logos[match.homeTeam] = await getTeamLogo(match.homeTeam);
+      }
+      if (!logos[match.awayTeam]) {
+        logos[match.awayTeam] = await getTeamLogo(match.awayTeam);
+      }
+    }
+    setTeamLogos(logos);
   };
 
   const formatDate = (dateString) => {
@@ -31,7 +47,14 @@ function MainPage() {
         {matches.map((match) => (
           <div key={match._id} className={styles.mainPage_fixture}>
             <div className={styles.mainPage_teams}>
-              <div className={styles.mainPage_team}>
+              <div className={`${styles.mainPage_team} ${styles.home}`}>
+                {teamLogos[match.homeTeam] && (
+                  <img
+                    src={teamLogos[match.homeTeam]}
+                    alt={`${match.homeTeam} logo`}
+                    className={styles.mainPage_teamLogo}
+                  />
+                )}
                 <span>{match.homeTeam}</span>
                 <div className={styles.mainPage_teamLabel}>Home Team</div>
               </div>
@@ -41,7 +64,14 @@ function MainPage() {
                   Seats
                 </Link>
               </div>
-              <div className={styles.mainPage_team} style={{ textAlign: 'right' }}>
+              <div className={`${styles.mainPage_team} ${styles.away}`}>
+                {teamLogos[match.awayTeam] && (
+                  <img
+                    src={teamLogos[match.awayTeam]}
+                    alt={`${match.awayTeam} logo`}
+                    className={styles.mainPage_teamLogo}
+                  />
+                )}
                 <span>{match.awayTeam}</span>
                 <div className={styles.mainPage_teamLabel}>Away Team</div>
               </div>

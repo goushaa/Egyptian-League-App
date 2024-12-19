@@ -27,7 +27,7 @@
 .mainPage_teams {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Aligns everything vertically */
+  align-items: flex-start; /* Aligns everything to the top */
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 15px;
@@ -35,12 +35,16 @@
 
 .mainPage_team {
   display: flex;
-  flex-direction: column;
-  text-align: left; /* Aligns team names and labels */
+  flex-direction: column; /* Aligns logo above text */
+  align-items: center; /* Centers text and logo horizontally */
 }
 
-.mainPage_team:last-child {
-  text-align: right; /* Aligns the Away Team */
+.mainPage_team.home {
+  align-items: flex-start; /* Aligns home team to the left */
+}
+
+.mainPage_team.away {
+  align-items: flex-end; /* Aligns away team to the right */
 }
 
 .mainPage_vs {
@@ -86,4 +90,10 @@
 
 .mainPage_detailItem {
   margin-bottom: 5px;
+}
+
+.mainPage_teamLogo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
 }

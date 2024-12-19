@@ -1,22 +1,104 @@
 .viewMatch_container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
-  
-  .viewMatch_h2 {
-    text-align: center;
-    color: #d32f2f; /* Red title */
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-  }
-  
-  .viewMatch_details {
-    font-size: 1rem;
-    line-height: 1.5;
-  }
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.viewMatch_h2 {
+  text-align: center;
+  color: #d32f2f; /* Red title */
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.viewMatch_teams {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.viewMatch_team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.viewMatch_teamLogo {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.viewMatch_vs {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.viewMatch_details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.viewMatch_detailItem {
+  display: flex;
+  align-items: center;
+  width: 48%;
+  margin-bottom: 10px;
+}
+
+.viewMatch_detailItem i {
+  margin-right: 10px;
+  color: #d32f2f; /* Red icon */
+}
+
+.viewMatch_seatsTitle {
+  text-align: center;
+  color: #d32f2f; /* Red title */
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.viewMatch_seats {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.viewMatch_row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.viewMatch_seat {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.viewMatch_seat_vacant {
+  background-color: #4caf50; /* Green for vacant seats */
+  color: white;
+}
+
+.viewMatch_seat_reserved {
+  background-color: #f44336; /* Red for reserved seats */
+  color: white;
+}

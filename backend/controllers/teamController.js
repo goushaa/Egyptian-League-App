@@ -16,7 +16,7 @@ const getTeams = async (req, res) => {
 
 const getTeamLogo = async (req, res) => {
   try {
-    const team = await Team.findOne({ _id: req.params.id });
+    const team = await Team.findOne({ name: req.params.name });
 
     if (team) {
       res.status(200).json({ teamImageURL: team.logo });
