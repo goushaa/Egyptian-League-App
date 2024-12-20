@@ -176,26 +176,26 @@ function ReserveTicket({ authData }) {
       <div className={styles.reserveTicket_right}>
         <h3 className={styles.reserveTicket_h3}>Your Reservations</h3>
         <ul>
-        {userTickets.map((ticket) => {
-          const match = matches.find((match) => match._id === ticket.matchId); 
-          return (
-            <li key={ticket._id} className={styles.reserveTicket_ticketItem}>
-              <Link to={`/view-match/${ticket.matchId}`} className={styles.reserveTicket_link}>
-                {match.homeTeam} vs {match.awayTeam}
-              </Link>
-              <div className={styles.reserveTicket_seats}>
-                Seats: {ticket.seatNumbers.join(', ')}
-              </div>
-              <button 
-                onClick={() => handleCancelReservation(ticket._id)} 
-                className={styles.reserveTicket_button}
-              >
-                Cancel
-              </button>
-            </li>
-          );
-        })}
-
+          {userTickets.map((ticket) => {
+            const match = matches.find((match) => match._id === ticket.matchId);
+            if (!match) return null;
+            return (
+              <li key={ticket._id} className={styles.reserveTicket_ticketItem}>
+                <Link to={`/view-match/${ticket.matchId}`} className={styles.reserveTicket_link}>
+                  {match.homeTeam} vs {match.awayTeam}
+                </Link>
+                <div className={styles.reserveTicket_seats}>
+                  Seats: {ticket.seatNumbers.join(', ')}
+                </div>
+                <button
+                  onClick={() => handleCancelReservation(ticket._id)}
+                  className={styles.reserveTicket_button}
+                >
+                  Cancel
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
