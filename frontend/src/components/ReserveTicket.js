@@ -16,7 +16,19 @@ function ReserveTicket({ authData }) {
   useEffect(() => {
     fetchMatches();
     fetchUserTickets();
-  }, []);
+
+    const ws = new WebSocket('ws://localhost:3000');
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.type === 'seatUpdate' && data.matchId === selectedMatch) {
+        setAvailableSeats(data.seats);
+      }
+    };
+
+    return () => {
+      ws.close();
+    };
+  }, [selectedMatch]);
 
   const fetchMatches = async () => {
     try {

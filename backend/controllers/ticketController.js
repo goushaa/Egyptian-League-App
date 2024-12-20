@@ -1,5 +1,6 @@
-const ticketModel = require('../models/ticketModel.js');
-const Match = require('../models/matchModel.js');
+const { broadcast } = require('../broadcast');
+const Match = require('../models/matchModel');
+const ticketModel = require('../models/ticketModel');
 
 const reserveTicket = async (req, res) => {
   try {
@@ -52,6 +53,9 @@ const reserveTicket = async (req, res) => {
 
     const price = updatedMatch.ticketPrice * seatNumbers.length;
     const ticket = await ticketModel.reserveTicket(matchId, seatNumbers, userName, price);
+
+    // Broadcast the updated seats to all connected clients
+    broadcast({ type: 'seatUpdate', matchId, seats: match.seats });
 
     return res.status(200).json({ ticket });
   } catch (error) {
@@ -109,4 +113,4 @@ module.exports = {
   reserveTicket,
   getAllTickets,
   deleteTicket
-};
+}

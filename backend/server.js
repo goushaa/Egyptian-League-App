@@ -1,6 +1,9 @@
+const express = require('express');
+const http = require('http');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const { wss } = require('./broadcast');
 const authRoutes = require('./routes/authRouter');
 const matchRoutes = require('./routes/matchRouter');
 const stadiumRoutes = require('./routes/stadiumRouter');
@@ -34,8 +37,25 @@ mongoose
   .then(() => console.log('DB connection successful!'))
   .catch((err) => console.error('DB connection error:', err));
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Handle WebSocket server upgrade
+server.on('upgrade', (request, socket, head) => {
+  wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.emit('connection', ws, request);
+  });
+});
+
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
+});
+
 // Start Server
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
