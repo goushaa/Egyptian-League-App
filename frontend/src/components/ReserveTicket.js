@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { getUserTickets, reserveTicket, deleteTicket } from '../services/ticketService';
 import { getMatches } from '../services/matchService';
@@ -12,6 +12,30 @@ function ReserveTicket({ authData }) {
   const [creditCard, setCreditCard] = useState({ number: '', pin: '' });
   const [message, setMessage] = useState('');
   const [userTickets, setUserTickets] = useState([]);
+
+  const fetchMatches = useCallback(async () => {
+    try {
+      const response = await getMatches();
+      setMatches(response.matches);
+      if (selectedMatch) {
+        const match = response.matches.find((match) => match._id === selectedMatch);
+        if (match) {
+          setAvailableSeats(match.seats);
+        }
+      }
+    } catch (error) {
+      setMessage(error.error);
+    }
+  }, [selectedMatch]);
+
+  const fetchUserTickets = useCallback(async () => {
+    try {
+      const response = await getUserTickets();
+      setUserTickets(response.tickets);
+    } catch (error) {
+      setMessage(error.error);
+    }
+  }, []);
 
   useEffect(() => {
     fetchMatches();
@@ -28,25 +52,7 @@ function ReserveTicket({ authData }) {
     return () => {
       ws.close();
     };
-  }, [selectedMatch]);
-
-  const fetchMatches = async () => {
-    try {
-      const response = await getMatches();
-      setMatches(response.matches);
-    } catch (error) {
-      setMessage(error.error);
-    }
-  };
-
-  const fetchUserTickets = async () => {
-    try {
-      const response = await getUserTickets();
-      setUserTickets(response.tickets);
-    } catch (error) {
-      setMessage(error.error);
-    }
-  };
+  }, [selectedMatch, fetchMatches, fetchUserTickets]);
 
   const handleMatchChange = (e) => {
     const matchId = e.target.value;
@@ -103,9 +109,8 @@ function ReserveTicket({ authData }) {
       });
       setMessage('Reservation successful!');
       fetchUserTickets();
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000); // Refresh the page after 2 seconds
+      fetchMatches(); // Fetch the latest matches to update the seats
+      setSelectedSeats([]); // Clear selected seats
     } catch (error) {
       setMessage(error.error);
     }
@@ -116,9 +121,7 @@ function ReserveTicket({ authData }) {
       await deleteTicket(ticketId);
       setMessage('Reservation cancelled successfully!');
       fetchUserTickets();
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000); // Refresh the page after 2 seconds
+      fetchMatches(); // Fetch the latest matches to update the seats
     } catch (error) {
       setMessage(error.error);
     }

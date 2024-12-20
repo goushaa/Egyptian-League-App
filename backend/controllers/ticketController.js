@@ -103,6 +103,9 @@ const deleteTicket = async (req, res) => {
     await Match.findByIdAndUpdate(ticket.matchId, { seats: match.seats }, { new: true });
     const deletedTicket = await ticketModel.deleteTicket(id);
 
+    // Broadcast the updated seats to all connected clients
+    broadcast({ type: 'seatUpdate', matchId: ticket.matchId, seats: match.seats });
+
     return res.status(200).json({ deletedCount: deletedTicket.deletedCount });
   } catch (error) {
     return res.status(400).json({ error: error.message });
